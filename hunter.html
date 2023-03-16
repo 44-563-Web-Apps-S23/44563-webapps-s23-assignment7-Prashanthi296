@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        HUNTING
+    </title>
+      
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" 
+  integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" 
+  integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" 
+  integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        #bushes {
+            background-color: paleturquoise;
+            color: darkorchid;
+            margin-bottom: 5px;
+            font-size: 25px;
+        }
+
+
+        #penalty {
+            background-color: burlywood;
+            color: black;
+            font-size: 25px;
+        }
+
+        #help {
+
+            background-color: blueviolet;
+            color: goldenrod;
+            margin-bottom: 3px;
+            font-size: 18px;
+
+
+        }
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"
+        integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD"
+        crossorigin="anonymous"></script>
+    <script>
+        function getRandomInt(min, max) {
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            value = Math.floor(Math.random() * (max - min) + min);
+
+            return value
+        }
+
+        ids = ["img0", "img1", "img2", "img3", "img4", "img5", "img6", "img7", "img8", "img9", "img10", "img11", "img12", "img13", "img14", "img15", "img16", "img17", "img18", "img19", "img20", "img21", "img22", "img23"]
+        checkCount = 0
+        penality = 0
+        lastCheck = 0
+        mouseLocation = getRandomInt(0, 23)
+        catLocation = getRandomInt(0, 23)
+        // mouseLocation = 13
+        // catLocation = 21
+        gameOver = false
+        pos = -1
+        function reset() {
+            checkCount = 0
+            penality = 0
+            lastCheck = 0
+            mouseLocation = getRandomInt(0, 23)
+            catLocation = getRandomInt(0, 23)
+            gameOver = false
+            pos = -1
+            document.getElementById("penality").innerHTML = 'penalti is 0.'
+            document.getElementById("bushes").innerHTML = 'Bushes is zero.'
+            document.getElementById("help").innerHTML = 'Help report here'
+            for (let index = 0; index < ids.length; index++) {
+                document.getElementById(ids[index]).src = 'smallbush.jfif'
+            }
+        }
+        function check(position) {
+            pos = position
+            if (gameOver == true) {
+            }
+            else if (position == mouseLocation) {
+                checkCount++;
+                document.getElementById(ids[position]).src = 'mouse.jpg'
+                gameOver = true;
+                penality = penality - 3;
+            }
+            else if (position == catLocation) {
+                checkCount++;
+                document.getElementById(ids[position]).src = 'bigcat.jfif'
+                gameOver = true;
+                penality = penality + 4;
+            }
+            else {
+                checkCount++;
+                penality++;
+                document.getElementById(ids[position]).src = 'grass.jfif'
+            }
+            document.getElementById("bushes").innerHTML = 'Number of times the image checked is ' + checkCount
+            document.getElementById("penality").innerHTML = 'Penality is ' + penality
+            lastcheck = position;
+        }
+        const between = (x, min, max) => {
+            return x >= min && x <= max;
+        }
+        function help() {
+            penality += 2
+            Usercol = pos % 6
+            Userrow = Math.floor(pos / 4)
+            catcol = catLocation % 6
+            mecol = mouseLocation % 6
+            catrow = Math.floor(catLocation / 4)
+            merow = Math.floor(mouseLocation / 4)
+            Mousecoldif = Math.abs(Usercol - mecol)
+            Mouserowdif = Math.abs(Userrow - merow)
+            Catcoldif = Math.abs(Usercol - catcol)
+            Catrowdif = Math.abs(Userrow - catrow)
+            if (Catrowdif <= 2 && Catcoldif <= 1) {
+                document.getElementById("help").innerHTML = 'Meow'
+            }
+            else if (Mouserowdif <= 2 && Mousecoldif <= 1) {
+                console.log(Userrow);
+                console.log(merow);
+                document.getElementById("help").innerHTML = 'Squeek'
+            }
+            else {
+                console.log(Userrow);
+                console.log(catrow);
+                document.getElementById("help").innerHTML = 'No Help'
+
+            }
+            document.getElementById("penality").innerHTML = 'Penality is ' + penality
+        }
+       
+    </script>
+    <style>
+        .row {
+            width: 80%;
+            margin: 0 auto;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="container-fluid">
+        <h1>Find the mouse by Prashanthi Rayala</h1>
+        <div>Click on the bushes to search for the mouse, beware the cat</div>
+        <div id="bushes">Number of bushes checked is zero</div>
+        <div id="penality">Penality is zero</div>
+        <div onclick="help()">Click for help</div>
+        <div id="help">Help report</div>
+        <button class="btn btn-success" onclick="reset()">Reset</button>
+    </div>
+    <div class="row">
+        <div class="col-sm-2"><img src="smallbush.jfif" height="100" width="100" id="img0" onclick="check(0)"></div>
+        <div class="col-sm-2"><img src="smallbush.jfif" height="100" width="100" id="img1" onclick="check(1)"></div>
+        <div class="col-sm-2"><img src="smallbush.jfif" height="100" width="100" id="img2" onclick="check(2)"></div>
+        <div class="col-sm-2"><img src="smallbush.jfif" height="100" width="100" id="img3" onclick="check(3)"></div>
+        <div class="col-sm-2"><img src="smallbush.jfif" height="100" width="100" id="img4" onclick="check(4)"></div>
+        <div class="col-sm-2"><img src="smallbush.jfif" height="100" width="100" id="img5" onclick="check(5)"></div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2"><img src="smallbush.jfif" height="100" width="100" id="img6" onclick="check(6)"></div>
+        <div class="col-sm-2"><img src="smallbush.jfif" height="100" width="100" id="img7" onclick="check(7)"></div>
+        <div class="col-sm-2"><img src="smallbush.jfif" height="100" width="100" id="img8" onclick="check(8)"></div>
+        <div class="col-sm-2"><img src="smallbush.jfif" height="100" width="100" id="img9" onclick="check(9)"></div>
+        <div class="col-sm-2"><img src="smallbush.jfif" height="100" width="100" id="img10" onclick="check(10)"></div>
+        <div class="col-sm-2"><img src="smallbush.jfif" height="100" width="100" id="img11" onclick="check(11)"></div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2"><img src="smallbush.jfif" height="100" width="100" id="img12" onclick="check(12)"></div>
+        <div class="col-sm-2"><img src="smallbush.jfif" height="100" width="100" id="img13" onclick="check(13)"></div>
+        <div class="col-sm-2"><img src="smallbush.jfif" height="100" width="100" id="img14" onclick="check(14)"></div>
+        <div class="col-sm-2"><img src="smallbush.jfif" height="100" width="100" id="img15" onclick="check(15)"></div>
+        <div class="col-sm-2"><img src="smallbush.jfif" height="100" width="100" id="img16" onclick="check(16)"></div>
+        <div class="col-sm-2"><img src="smallbush.jfif" height="100" width="100" id="img17" onclick="check(17)"></div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2"><img src="smallbush.jfif" height="100" width="100" id="img18" onclick="check(18)"></div>
+        <div class="col-sm-2"><img src="smallbush.jfif" height="100" width="100" id="img19" onclick="check(19)"></div>
+        <div class="col-sm-2"><img src="smallbush.jfif" height="100" width="100" id="img20" onclick="check(20)"></div>
+        <div class="col-sm-2"><img src="smallbush.jfif" height="100" width="100" id="img21" onclick="check(21)"></div>
+        <div class="col-sm-2"><img src="smallbush.jfif" height="100" width="100" id="img22" onclick="check(22)"></div>
+        <div class="col-sm-2"><img src="smallbush.jfif" height="100" width="100" id="img23" onclick="check(23)"></div>
+    </div>
+
+
+</body>
+
+</html>
